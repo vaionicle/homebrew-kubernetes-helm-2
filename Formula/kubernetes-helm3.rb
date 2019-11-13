@@ -13,12 +13,10 @@ class KubernetesHelm3 < Formula
     sha256 "1ef513d4f6f7b06dae7d7106be9f3c492539b04306208d231fd76a43e68f88c0" => :high_sierra
   end
 
-  depends_on "glide" => :build
   depends_on "go" => :build
 
   def install
     ENV["GOPATH"] = buildpath
-    ENV["GLIDE_HOME"] = HOMEBREW_CACHE/"glide_home/#{name}"
     ENV.prepend_create_path "PATH", buildpath/"bin"
     ENV["TARGETS"] = "darwin/amd64"
     dir = buildpath/"src/k8s.io/helm"
