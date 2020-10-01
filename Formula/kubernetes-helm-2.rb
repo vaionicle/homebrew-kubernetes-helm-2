@@ -1,39 +1,43 @@
-class KubernetesHelm3 < Formula
+class KubernetesHelm2 < Formula
   desc "The Kubernetes package manager"
   homepage "https://helm.sh/"
   url "https://github.com/helm/helm.git",
-      :tag      => "v3.0.0",
-      :revision => "e29ce2a54e96cd02ccfce88bee4f58bb6e2a28b6"
+      :tag      => "v2.14.3",
+      :revision => "0e7f3b6637f7af8fcfddb3d2941fcc7cbebb0085"
   head "https://github.com/helm/helm.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "8f5cfdfa468951ac2d8a263c4718d4d3ce7b6aecda9acd7c72ea9b45fdbea429" => :catalina
-    sha256 "0e67b98e5b0b7b1a12bf2c807ecd362a5fd727efe683ce9cb58c2c07fc9f9cff" => :mojave
-    sha256 "1ef513d4f6f7b06dae7d7106be9f3c492539b04306208d231fd76a43e68f88c0" => :high_sierra
+    sha256 "4745dd0bc615ecb4ed1ab0cf0a2bedc91e8fc6d468d9bdf253f741e2ab4d06ab" => :catalina
+    sha256 "35424b638f34e451a572959e2548c97a18589a97e997053f4c25e39511e17ac8" => :mojave
+    sha256 "b0dabf5935ba18efd9c247f75b8b50efcdb34e6f2d74bc8ccb781bc78ca612c3" => :high_sierra
+    sha256 "4e43a2e5ca35248314a84d9e791de028a9634b7060ecb6188192f59e7010faec" => :sierra
   end
 
+  depends_on "glide" => :build
   depends_on "go" => :build
 
   def install
     ENV["GOPATH"] = buildpath
+    ENV["GLIDE_HOME"] = HOMEBREW_CACHE/"glide_home/#{name}"
     ENV.prepend_create_path "PATH", buildpath/"bin"
     ENV["TARGETS"] = "darwin/amd64"
     dir = buildpath/"src/k8s.io/helm"
     dir.install buildpath.children - [buildpath/".brew_home"]
 
     cd dir do
+      system "make", "bootstrap"
       system "make", "build"
 
-      File.rename("bin/helm", "bin/helm3")
-      bin.install "bin/helm3"
+      bin.install "bin/helm"
+      bin.install "bin/tiller"
       man1.install Dir["docs/man/man1/*"]
 
-      output = Utils.popen_read("SHELL=bash #{bin}/helm3 completion bash")
-      (bash_completion/"helm3").write output
+      output = Utils.popen_read("SHELL=bash #{bin}/helm completion bash")
+      (bash_completion/"helm").write output
 
-      output = Utils.popen_read("SHELL=zsh #{bin}/helm3 completion zsh")
-      (zsh_completion/"_helm3").write output
+      output = Utils.popen_read("SHELL=zsh #{bin}/helm completion zsh")
+      (zsh_completion/"_helm").write output
 
       prefix.install_metafiles
     end
