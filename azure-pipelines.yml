@@ -1,13 +1,13 @@
 jobs:
 - job: macOS
   pool:
-    vmImage: macOS-10.14
+    vmImage: macOS-10.15
   steps:
     - bash: |
         set -e
         sudo xcode-select --switch /Applications/Xcode_10.2.1.app/Contents/Developer
         brew update
-        HOMEBREW_TAP_DIR="/usr/local/Homebrew/Library/Taps/Gary-Mansell/homebrew-kubernetes-helm3"
+        HOMEBREW_TAP_DIR="/usr/local/Homebrew/Library/Taps/vaionicle/homebrew-kubernetes-helm-2"
         mkdir -p "$HOMEBREW_TAP_DIR"
         rm -rf "$HOMEBREW_TAP_DIR"
         ln -s "$PWD" "$HOMEBREW_TAP_DIR"
