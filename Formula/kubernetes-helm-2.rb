@@ -6,14 +6,14 @@ class KubernetesHelm2 < Formula
       :revision => "0e7f3b6637f7af8fcfddb3d2941fcc7cbebb0085"
   head "https://github.com/helm/helm.git"
 
-  bottle do
-    root_url "https://homebrew.bintray.com/bottles"
-    cellar :any_skip_relocation
-    sha256 "4745dd0bc615ecb4ed1ab0cf0a2bedc91e8fc6d468d9bdf253f741e2ab4d06ab" => :catalina
-    sha256 "35424b638f34e451a572959e2548c97a18589a97e997053f4c25e39511e17ac8" => :mojave
-    sha256 "b0dabf5935ba18efd9c247f75b8b50efcdb34e6f2d74bc8ccb781bc78ca612c3" => :high_sierra
-    sha256 "4e43a2e5ca35248314a84d9e791de028a9634b7060ecb6188192f59e7010faec" => :sierra
-  end
+#   bottle do
+#     root_url "https://homebrew.bintray.com/bottles"
+#     cellar :any_skip_relocation
+#     sha256 "4745dd0bc615ecb4ed1ab0cf0a2bedc91e8fc6d468d9bdf253f741e2ab4d06ab" => :catalina
+#     sha256 "35424b638f34e451a572959e2548c97a18589a97e997053f4c25e39511e17ac8" => :mojave
+#     sha256 "b0dabf5935ba18efd9c247f75b8b50efcdb34e6f2d74bc8ccb781bc78ca612c3" => :high_sierra
+#     sha256 "4e43a2e5ca35248314a84d9e791de028a9634b7060ecb6188192f59e7010faec" => :sierra
+#   end
 
   depends_on "glide" => :build
   depends_on "go" => :build
