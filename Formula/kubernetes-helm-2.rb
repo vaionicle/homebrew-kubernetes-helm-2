@@ -44,10 +44,10 @@ class KubernetesHelm2 < Formula
   end
 
   test do
-    system "#{bin}/helm3", "create", "foo"
+    system "#{bin}/helm", "create", "foo"
     assert File.directory? "#{testpath}/foo/charts"
 
-    version_output = shell_output("#{bin}/helm3 version --client 2>&1")
+    version_output = shell_output("#{bin}/helm version --client 2>&1")
     assert_match "GitTreeState:\"clean\"", version_output
     assert_match stable.instance_variable_get(:@resource).instance_variable_get(:@specs)[:revision], version_output if build.stable?
   end
